@@ -24,11 +24,11 @@ class App extends Component {
   render() {
     return (
       <div className="Countdown-holder">
-        <div>Contagem termina em {this.state.deadline}</div>
+        <div className="h1">Contagem termina em {this.state.deadline}</div>
         <Clock deadline={this.state.deadline}></Clock>
         <Form inline>
           <FormControl placeholder="Insira uma nova data" onChange={event => this.processDeadline(event)}/>
-          <Button onClick={() => this.setNewDeadline()}>Mudar deadline</Button>
+          <Button className="Form-button" onClick={() => this.setNewDeadline()}>Mudar deadline</Button>
         </Form>
       </div>
     )
