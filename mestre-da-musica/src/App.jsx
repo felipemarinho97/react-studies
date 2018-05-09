@@ -49,7 +49,9 @@ class App extends React.Component {
                 this.setState({artistName: event.target.value})
               }}
               placeholder="Nome do artista" />
-            <InputGroup.Addon onClick={() => this.search(this.state.artistName)}>Pesquisar</InputGroup.Addon>
+            <InputGroup.Addon
+              onClick={() => this.search(this.state.artistName)}
+            >Pesquisar</InputGroup.Addon>
         </InputGroup>
 
         </FormGroup>
