@@ -10,23 +10,25 @@ class App extends React.Component {
     this.state = {
       artistName: '',
       artist: null,
-      albums: null
+      loadingArtist: false,
+      albums: null,
+      loadingAlbums: false,
     }
   }
 
   search(artistName) {
     const BASE_URL = 'http://musicbrainz.org/ws/2/';
     const QUERY_URL = `${BASE_URL}artist?query=%22${artistName}%22&fmt=json&limit=1`;
+    this.setState({loadingArtist: true})
     fetch(QUERY_URL, {
       method: 'GET'
     }).then(response => response.json())
       .then(response => {
-        this.setState({artist: response.artists[0]});
-
+        this.setState({artist: response.artists[0], loadingArtist: false, loadingAlbums: true});
         fetch(BASE_URL + 'artist/' + response.artists[0].id + '?inc=release-groups&fmt=json')
           .then(response => response.json())
           .then(response => {
-            this.setState({albums: response['release-groups']})
+            this.setState({albums: response['release-groups'], loadingAlbums: false})
             console.log(response);
           })
       })
@@ -55,22 +57,27 @@ class App extends React.Component {
         </InputGroup>
 
         </FormGroup>
-        {this.state.artist ?
-        <div>
-        <ArtistProfile
-          artist={this.state.artist}
-        />
-        <br/>
-        <div className="Gallery">
-          {
-            this.state.albums ?
-            this.state.albums.map((e, k) => {
-              return (<Album album={e} key={k}/>)
-            }) : ''
-          }
-        </div>
-      </div> :
-      <div></div>
+        {
+          !this.state.loadingArtist ?
+            this.state.artist ?
+              <div>
+              <ArtistProfile
+                artist={this.state.artist}
+              />
+              <br/>
+                <div className="Gallery">
+                  {
+                    !this.state.loadingAlbums ?
+                      this.state.albums ?
+                      this.state.albums.map((e, k) => {
+                        return (<Album album={e} key={k}/>)
+                      }) : 'Nenhum album encontrado'
+                    : 'Carregando albums...'
+                  }
+                </div>
+              </div>
+            : <div></div>
+          : 'Carregando artista...'
         }
       </div>
     )
