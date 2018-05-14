@@ -1,7 +1,7 @@
 export const ADD_LEMBRETE = 'ADD_LEMBRETE';
 
 const addLembrete = (lembrete) => {
-  retrun {
+  return {
     type: ADD_LEMBRETE,
     lembrete
   }
