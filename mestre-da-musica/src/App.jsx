@@ -1,6 +1,7 @@
 import React from 'react';
 import ArtistProfile from './ArtistProfile'
 import Album from './Album'
+import Loading from './Loading'
 import { FormGroup, FormControl, InputGroup, Button } from 'react-bootstrap';
 
 
@@ -72,12 +73,12 @@ class App extends React.Component {
                       this.state.albums.map((e, k) => {
                         return (<Album album={e} key={k}/>)
                       }) : 'Nenhum album encontrado'
-                    : 'Carregando albums...'
+                    : <div>Carregando albums<Loading /></div>
                   }
                 </div>
               </div>
             : <div></div>
-          : 'Carregando artista...'
+          : <div>Carregando artista<Loading /></div>
         }
       </div>
     )
